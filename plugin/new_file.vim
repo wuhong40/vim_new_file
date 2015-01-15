@@ -10,7 +10,7 @@ let g:wh_create_new_file_class="common"
 function! s:is_new_file()
     let line_cnt = line("w$")
     let i = 1
-    while i <= line_cnt 
+    while i <= line_cnt
         let line = getline(i)
         if line !~ '^\s*$'
             return 0
@@ -26,7 +26,7 @@ function! s:create_new_file(filetype)
     if s:is_new_file()
         let lines = s:get_lines_after_replace(a:filetype, g:wh_create_new_file_class)
 
-        "find insert place 
+        "find insert place
         let pos = s:find_insert_position(lines)
         "echo pos
 
@@ -66,7 +66,7 @@ function! s:replace_lines(lines)
     call s:replace_str("@MIN@"   , s:get_min()   , a:lines)
     call s:replace_str("@SEC@"   , s:get_sec()   , a:lines)
 
-    " Replace Author Info 
+    " Replace Author Info
     call s:replace_str("@AUTHOR@", g:wh_author, a:lines)
     call s:replace_str("@EMAIL@", g:wh_email, a:lines)
 
@@ -139,12 +139,13 @@ function! s:find_insert_position(lines)
 endfunction
 
 augroup CreateNewFile
-    autocmd CreateNewFile BufNewFile,BufRead *.h            call <SID>create_new_file("h")
-    autocmd CreateNewFile BufNewFile,BufRead *.c            call <SID>create_new_file("c")
-    autocmd CreateNewFile BufNewFile,BufRead *.cpp          call <SID>create_new_file("cpp")
+    autocmd CreateNewFile BufNewFile,BufRead *.h call <SID>create_new_file("h")
+    autocmd CreateNewFile BufNewFile,BufRead *.hpp call <SID>create_new_file("hpp")
+    autocmd CreateNewFile BufNewFile,BufRead *.c call <SID>create_new_file("c")
+    autocmd CreateNewFile BufNewFile,BufRead *.cpp call <SID>create_new_file("cpp")
     autocmd CreateNewFile BufNewFile,BufRead *.html,*.htm   call <SID>create_new_file("html")
-    autocmd CreateNewFile BufNewFile,BufRead *.js           call <SID>create_new_file("js")
-    autocmd CreateNewFile BufNewFile,BufRead *.css          call <SID>create_new_file("css")
-    autocmd CreateNewFile BufNewFile,BufRead *.sh           call <SID>create_new_file("sh")
+    autocmd CreateNewFile BufNewFile,BufRead *.js  call <SID>create_new_file("js")
+    autocmd CreateNewFile BufNewFile,BufRead *.css call <SID>create_new_file("css")
+    autocmd CreateNewFile BufNewFile,BufRead *.sh  call <SID>create_new_file("sh")
 augroup END
 
