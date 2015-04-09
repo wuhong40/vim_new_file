@@ -41,7 +41,7 @@ function! s:create_new_file(filetype)
 endfunction
 
 function! s:get_lines_after_replace(filetype, class)
-    let temp_file_path=g:wh_template_dir.a:class."/".a:filetype.".txt"
+    let temp_file_path=g:dir_template . a:class."/".a:filetype.".txt"
 
     if filereadable(temp_file_path)
         let lines = readfile(temp_file_path)
@@ -67,8 +67,8 @@ function! s:replace_lines(lines)
     call s:replace_str("@SEC@"   , s:get_sec()   , a:lines)
 
     " Replace Author Info
-    call s:replace_str("@AUTHOR@", g:wh_author, a:lines)
-    call s:replace_str("@EMAIL@", g:wh_email, a:lines)
+    call s:replace_str("@AUTHOR@", g:author_name, a:lines)
+    call s:replace_str("@EMAIL@", g:author_email, a:lines)
 
 
     return a:lines
@@ -143,6 +143,7 @@ augroup CreateNewFile
     autocmd CreateNewFile BufNewFile,BufRead *.hpp call <SID>create_new_file("hpp")
     autocmd CreateNewFile BufNewFile,BufRead *.c call <SID>create_new_file("c")
     autocmd CreateNewFile BufNewFile,BufRead *.cpp call <SID>create_new_file("cpp")
+    autocmd CreateNewFile BufNewFile,BufRead *.py call <SID>create_new_file("py")
     autocmd CreateNewFile BufNewFile,BufRead *.html,*.htm   call <SID>create_new_file("html")
     autocmd CreateNewFile BufNewFile,BufRead *.js  call <SID>create_new_file("js")
     autocmd CreateNewFile BufNewFile,BufRead *.css call <SID>create_new_file("css")
