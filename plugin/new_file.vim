@@ -57,7 +57,6 @@ function! s:replace_lines(lines)
     call s:replace_str("@FILE_NAME@"  , s:get_file_name()  , a:lines)
     call s:replace_str("@FILE_NAME_UPPER@"  , toupper(s:get_file_name())  , a:lines)
 
-
     " Replace datetime
     call s:replace_str("@YEAR@"  , s:get_year()  , a:lines)
     call s:replace_str("@MONTH@" , s:get_month() , a:lines)
@@ -66,10 +65,13 @@ function! s:replace_lines(lines)
     call s:replace_str("@MIN@"   , s:get_min()   , a:lines)
     call s:replace_str("@SEC@"   , s:get_sec()   , a:lines)
 
+    call s:replace_str("@DATE@"     , s:get_date()     , a:lines)
+    call s:replace_str("@TIME@"     , s:get_time()     , a:lines)
+    call s:replace_str("@DATETIME@" , s:get_datetime() , a:lines)
+
     " Replace Author Info
     call s:replace_str("@AUTHOR@", g:author_name, a:lines)
     call s:replace_str("@EMAIL@", g:author_email, a:lines)
-
 
     return a:lines
 endfunction
@@ -90,12 +92,24 @@ function! s:get_day()
     return strftime("%d")
 endfunction
 
+function! s:get_date()
+    return strftime("%Y-%m-%d")
+endfunction
+
+function! s:get_time()
+    return strftime("%H:%M:%S")
+endfunction
+
+function! s:get_datetime()
+    return strftime("%Y-%m-%d %H:%M:%S")
+endfunction
+
 function! s:get_hour()
     return strftime("%H")
 endfunction
 
 function! s:get_min()
-    return strftime("%m")
+    return strftime("%M")
 endfunction
 
 function! s:get_sec()
@@ -143,6 +157,7 @@ augroup CreateNewFile
     autocmd CreateNewFile BufNewFile,BufRead *.hpp call <SID>create_new_file("hpp")
     autocmd CreateNewFile BufNewFile,BufRead *.c call <SID>create_new_file("c")
     autocmd CreateNewFile BufNewFile,BufRead *.cpp call <SID>create_new_file("cpp")
+    autocmd CreateNewFile BufNewFile,BufRead *.go call <SID>create_new_file("go")
     autocmd CreateNewFile BufNewFile,BufRead *.py call <SID>create_new_file("py")
     autocmd CreateNewFile BufNewFile,BufRead *.html,*.htm   call <SID>create_new_file("html")
     autocmd CreateNewFile BufNewFile,BufRead *.js  call <SID>create_new_file("js")
