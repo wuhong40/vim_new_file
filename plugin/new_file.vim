@@ -54,8 +54,11 @@ endfunction
 function! s:replace_lines(lines)
 
     "Replace file name
-    call s:replace_str("@FILE_NAME@"  , s:get_file_name()  , a:lines)
-    call s:replace_str("@FILE_NAME_UPPER@"  , toupper(s:get_file_name())  , a:lines)
+    call s:replace_str("@FILE_NAME@", s:get_file_name()  , a:lines)
+    call s:replace_str("@FILE_BASE_NAME@", s:get_file_base_name()  , a:lines)
+    call s:replace_str("@FILE_PATH@", s:get_file_path()  , a:lines)
+    call s:replace_str("@FILE_NAME_UPPER@", toupper(s:get_file_name())  , a:lines)
+    call s:replace_str("@FILE_BASE_NAME_UPPER@", toupper(s:get_file_base_name())  , a:lines)
 
     " Replace datetime
     call s:replace_str("@YEAR@"  , s:get_year()  , a:lines)
@@ -77,6 +80,14 @@ function! s:replace_lines(lines)
 endfunction
 
 function! s:get_file_name()
+    return fnamemodify(bufname("%"), ":t")
+endfunction
+
+function! s:get_file_path()
+    return fnamemodify(bufname("%"), ":p")
+endfunction
+
+function! s:get_file_base_name()
     return fnamemodify(bufname("%"), ":t:r")
 endfunction
 
